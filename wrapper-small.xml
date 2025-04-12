@@ -1,0 +1,21 @@
+<tool id="fastplong" name="Fastp Long Read Filter" version="0.2.2">
+    <requirements>
+        <requirement type="package" version="0.2.2">fastplong</requirement>
+    </requirements>
+    <description>Filter and trim long reads</description>
+    <command detect_errors="exit_code">
+        <![CDATA[
+        fastplong \
+            -i '$inputs' \
+            -o '$output'
+        ]]>
+    </command>
+
+    <inputs>
+        <param name="inputs" type="data" format="fastq" label="Input FASTQ file"/>
+    </inputs>
+
+    <outputs>
+        <data name="output" format="fastq" label="Filtered Output FASTQ"/>
+    </outputs>
+</tool>
