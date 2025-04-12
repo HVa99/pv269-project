@@ -1,0 +1,133 @@
+<tool id="fastplong" name="Fastp Long Read Filter" version="0.0.1">
+    <description>Ultra-fast FASTQ preprocessing and QC for long reads</description>
+    <command detect_errors="exit_code">
+        <![CDATA[
+        fastplong \
+            -i '$in_file' \
+            -o '$out_file' \
+            #if $failed_out:
+                --failed_out '$failed_out'
+            #end if
+            -z $compression \
+            #if $stdin:
+                --stdin \
+            #end if
+            #if $stdout:
+                --stdout \
+            #end if
+            --reads_to_process $reads_to_process \
+            #if $dont_overwrite:
+                --dont_overwrite \
+            #end if
+            #if $verbose:
+                -V \
+            #end if
+            #if $disable_adapter:
+                -A \
+            #end if
+            -s '$start_adapter' \
+            -e '$end_adapter' \
+            #if $adapter_fasta:
+                -a '$adapter_fasta' \
+            #end if
+            -d $distance_threshold \
+            --trimming_extension $trimming_extension \
+            -f $trim_front \
+            -t $trim_tail \
+            #if $trim_poly_x:
+                -x \
+            #end if
+            --poly_x_min_len $poly_x_min_len \
+            #if $cut_front:
+                -5 \
+            #end if
+            #if $cut_tail:
+                -3 \
+            #end if
+            -W $cut_window_size \
+            -M $cut_mean_quality \
+            --cut_front_window_size $cut_front_window_size \
+            --cut_front_mean_quality $cut_front_mean_quality \
+            --cut_tail_window_size $cut_tail_window_size \
+            --cut_tail_mean_quality $cut_tail_mean_quality \
+            #if $disable_quality:
+                -Q \
+            #end if
+            -q $qualified_phred \
+            -u $unqualified_limit \
+            -n $n_base_limit \
+            -m $mean_qual \
+            #if $disable_length:
+                -L \
+            #end if
+            -l $length_required \
+            --length_limit $length_limit \
+            #if $low_complexity:
+                -y \
+            #end if
+            -Y $complexity_threshold \
+            -j '$json_report' \
+            -h '$html_report' \
+            -R "$report_title" \
+            -w $threads \
+            --split $split \
+            --split_by_lines $split_by_lines \
+            --split_prefix_digits $split_prefix_digits
+        ]]>
+    </command>
+
+    <inputs>
+        <param name="in_file" type="data" format="fastq" label="Input FASTQ file"/>
+        <param name="out_file" type="text" label="Output file name"/>
+        <param name="failed_out" type="text" optional="true" label="Failed reads output file"/>
+        <param name="compression" type="integer" value="4" label="Compression level (1-9)"/>
+        <param name="stdin" type="boolean" label="Input from STDIN" checked="false"/>
+        <param name="stdout" type="boolean" label="Output to STDOUT" checked="false"/>
+        <param name="reads_to_process" type="integer" value="0" label="Number of reads to process (0=all)"/>
+        <param name="dont_overwrite" type="boolean" label="Don't overwrite output" checked="false"/>
+        <param name="verbose" type="boolean" label="Verbose logging" checked="false"/>
+        <param name="disable_adapter" type="boolean" label="Disable adapter trimming" checked="false"/>
+        <param name="start_adapter" type="text" value="auto" label="5' adapter sequence"/>
+        <param name="end_adapter" type="text" value="auto" label="3' adapter sequence"/>
+        <param name="adapter_fasta" type="data" format="fasta" optional="true" label="FASTA file for adapters"/>
+        <param name="distance_threshold" type="float" value="0.25" label="Adapter distance threshold"/>
+        <param name="trimming_extension" type="integer" value="10" label="Trimming extension"/>
+        <param name="trim_front" type="integer" value="0" label="Trim bases from front"/>
+        <param name="trim_tail" type="integer" value="0" label="Trim bases from tail"/>
+        <param name="trim_poly_x" type="boolean" label="Enable polyX trimming"/>
+        <param name="poly_x_min_len" type="integer" value="10" label="Min polyX length"/>
+        <param name="cut_front" type="boolean" label="Cut from front using quality"/>
+        <param name="cut_tail" type="boolean" label="Cut from tail using quality"/>
+        <param name="cut_window_size" type="integer" value="4" label="Sliding window size"/>
+        <param name="cut_mean_quality" type="integer" value="20" label="Mean quality threshold"/>
+        <param name="cut_front_window_size" type="integer" value="4" label="Cut front window size"/>
+        <param name="cut_front_mean_quality" type="integer" value="20" label="Cut front mean quality"/>
+        <param name="cut_tail_window_size" type="integer" value="4" label="Cut tail window size"/>
+        <param name="cut_tail_mean_quality" type="integer" value="20" label="Cut tail mean quality"/>
+        <param name="disable_quality" type="boolean" label="Disable quality filtering"/>
+        <param name="qualified_phred" type="integer" value="15" label="Qualified base phred score"/>
+        <param name="unqualified_limit" type="integer" value="40" label="Allowed unqualified percent"/>
+        <param name="n_base_limit" type="integer" value="5" label="Max allowed N bases"/>
+        <param name="mean_qual" type="integer" value="0" label="Minimum mean quality"/>
+        <param name="disable_length" type="boolean" label="Disable length filtering"/>
+        <param name="length_required" type="integer" value="15" label="Minimum read length"/>
+        <param name="length_limit" type="integer" value="0" label="Maximum read length (0=unlimited)"/>
+        <param name="low_complexity" type="boolean" label="Enable low complexity filtering"/>
+        <param name="complexity_threshold" type="integer" value="30" label="Minimum complexity %"/>
+        <param name="json_report" type="text" value="fastplong.json" label="JSON report filename"/>
+        <param name="html_report" type="text" value="fastplong.html" label="HTML report filename"/>
+        <param name="report_title" type="text" value="fastplong report" label="Report title"/>
+        <param name="threads" type="integer" value="3" label="Number of threads"/>
+        <param name="split" type="integer" value="0" label="Split output files (0=disabled)"/>
+        <param name="split_by_lines" type="integer" value="0" label="Split by line count (0=disabled)"/>
+        <param name="split_prefix_digits" type="integer" value="4" label="Digits in split filename prefix"/>
+    </inputs>
+
+    <outputs>
+        <data name="out_file" format="fastq" label="Filtered output FASTQ"/>
+    </outputs>
+
+    <requirements>
+        <requirement type="package">fastplong</requirement>
+    </requirements>
+</tool>
