@@ -1,8 +1,8 @@
-<tool id="fastplong" name="Fastp Long Read Filter" version="0.2.2">
+<tool id="fastplong" name="Fastplong" version="0.2.2">
     <requirements>
         <requirement type="package" version="0.2.2">fastplong</requirement>
     </requirements>
-    <description>Filter and trim long reads</description>
+    <description>Ultrafast preprocessing and quality control for long reads (Nanopore, PacBio, Cyclone, etc.).</description>
     <command detect_errors="exit_code">
         <![CDATA[
         fastplong -i '$inputs' -o '$output' 
@@ -93,6 +93,9 @@
 	#if $complexity_threshold:
 	    --complexity_threshold '$complexity_threshold'
 	#end if
+	#if $thread:
+	    --thread '$thread'
+	#end if
         ]]>
     </command>
 
@@ -127,6 +130,7 @@
 	<param name="length_limit" type="integer" optional="true" label="Maximum read length" help="Reads longer than this will be discarded (--length_limit). Default: 0 (no limit)"/>
 	<param name="low_complexity_filter" type="boolean" checked="false" label="Enable low complexity filter?" help="Enable low complexity filtering (--low_complexity_filter or -y)"/>
 	<param name="complexity_threshold" type="integer" optional="true" label="Complexity threshold (%)" help="Minimum required sequence complexity (0–100) (--complexity_threshold or -Y). Default: 30"/>
+	<param name="thread" type="integer" optional="true" label="Number of threads" help="Number of worker threads (--thread or -w). Default is 3"/>
     </inputs>
 
     <outputs>
