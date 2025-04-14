@@ -66,6 +66,33 @@
         #if $cut_tail_mean_quality:
             --cut_tail_mean_quality '$cut_tail_mean_quality'
         #end if
+	#if $qualified_quality_phred:
+    	    --qualified_quality_phred '$qualified_quality_phred'
+	#end if
+	#if $unqualified_percent_limit:
+    	    --unqualified_percent_limit '$unqualified_percent_limit'
+	#end if
+	#if $n_base_limit:
+	    --n_base_limit '$n_base_limit'
+	#end if
+	#if $mean_qual:
+	    --mean_qual '$mean_qual'
+	#end if
+	#if $disable_length_filtering:
+	    --disable_length_filtering
+	#end if
+	#if $length_required:
+	    --length_required '$length_required'
+	#end if
+	#if $length_limit:
+	    --length_limit '$length_limit'
+	#end if
+	#if $low_complexity_filter:
+	    --low_complexity_filter
+	#end if
+	#if $complexity_threshold:
+	    --complexity_threshold '$complexity_threshold'
+	#end if
         ]]>
     </command>
 
@@ -91,6 +118,15 @@
         <param name="cut_front_mean_quality" type="integer" optional="true" label="Front mean quality" help="Override quality threshold for cut_front only (--cut_front_mean_quality). Default: cut_mean_quality"/>
         <param name="cut_tail_window_size" type="integer" optional="true" label="Tail window size" help="Override window size for cut_tail only (--cut_tail_window_size). Default: cut_window_size"/>
         <param name="cut_tail_mean_quality" type="integer" optional="true" label="Tail mean quality" help="Override quality threshold for cut_tail only (--cut_tail_mean_quality). Default: cut_mean_quality"/>
+	<param name="qualified_quality_phred" type="integer" optional="true" label="Qualified base Phred score" help="Phred quality score that counts as qualified (--qualified_quality_phred or -q). Default: 15"/>
+	<param name="unqualified_percent_limit" type="integer" optional="true" label="Unqualified base percentage limit" help="Percent of bases allowed to be below quality threshold (--unqualified_percent_limit or -u). Default: 40"/>
+	<param name="n_base_limit" type="integer" optional="true" label="N base limit" help="Reads with more than this number of N bases are discarded (--n_base_limit or -n). Default: 5"/>
+	<param name="mean_qual" type="integer" optional="true" label="Minimum mean quality" help="Reads with mean quality below this are discarded (--mean_qual or -m). Default: 0"/>
+	<param name="disable_length_filtering" type="boolean" checked="false" label="Disable length filtering?" help="Length filtering is enabled by default. Enable this to disable it (--disable_length_filtering or -L)"/>
+	<param name="length_required" type="integer" optional="true" label="Minimum read length" help="Reads shorter than this will be discarded (--length_required or -l). Default: 15"/>
+	<param name="length_limit" type="integer" optional="true" label="Maximum read length" help="Reads longer than this will be discarded (--length_limit). Default: 0 (no limit)"/>
+	<param name="low_complexity_filter" type="boolean" checked="false" label="Enable low complexity filter?" help="Enable low complexity filtering (--low_complexity_filter or -y)"/>
+	<param name="complexity_threshold" type="integer" optional="true" label="Complexity threshold (%)" help="Minimum required sequence complexity (0–100) (--complexity_threshold or -Y). Default: 30"/>
     </inputs>
 
     <outputs>
