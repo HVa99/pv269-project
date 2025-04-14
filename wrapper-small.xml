@@ -48,6 +48,24 @@
         #if $cut_tail:
             --cut_tail
         #end if
+	#if $cut_window_size:
+            --cut_window_size '$cut_window_size'
+        #end if
+        #if $cut_mean_quality:
+            --cut_mean_quality '$cut_mean_quality'
+        #end if
+        #if $cut_front_window_size:
+            --cut_front_window_size '$cut_front_window_size'
+        #end if
+        #if $cut_front_mean_quality:
+            --cut_front_mean_quality '$cut_front_mean_quality'
+        #end if
+        #if $cut_tail_window_size:
+            --cut_tail_window_size '$cut_tail_window_size'
+        #end if
+        #if $cut_tail_mean_quality:
+            --cut_tail_mean_quality '$cut_tail_mean_quality'
+        #end if
         ]]>
     </command>
 
@@ -67,6 +85,12 @@
         <param name="poly_x_min_len" type="integer" optional="true" label="Minimum polyX length" help="Minimum length to detect polyX in the tail (--poly_x_min_len). Default is 10"/>
         <param name="cut_front" type="boolean" checked="false" label="Enable sliding-window trimming from 5' end?" help="Trim from 5' end until window mean quality is above threshold (--cut_front or -5)"/>
         <param name="cut_tail" type="boolean" checked="false" label="Enable sliding-window trimming from 3' end?" help="Trim from 3' end until window mean quality is above threshold (--cut_tail or -3)"/>
+	<param name="cut_window_size" type="integer" optional="true" label="Sliding window size" help="Window size shared by cut_front, cut_tail, cut_sliding (--cut_window_size or -W). Default: 4"/>
+        <param name="cut_mean_quality" type="integer" optional="true" label="Mean quality threshold" help="Mean quality required for cutting (--cut_mean_quality or -M). Default: 20"/>
+        <param name="cut_front_window_size" type="integer" optional="true" label="Front window size" help="Override window size for cut_front only (--cut_front_window_size). Default: cut_window_size"/>
+        <param name="cut_front_mean_quality" type="integer" optional="true" label="Front mean quality" help="Override quality threshold for cut_front only (--cut_front_mean_quality). Default: cut_mean_quality"/>
+        <param name="cut_tail_window_size" type="integer" optional="true" label="Tail window size" help="Override window size for cut_tail only (--cut_tail_window_size). Default: cut_window_size"/>
+        <param name="cut_tail_mean_quality" type="integer" optional="true" label="Tail mean quality" help="Override quality threshold for cut_tail only (--cut_tail_mean_quality). Default: cut_mean_quality"/>
     </inputs>
 
     <outputs>
