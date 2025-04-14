@@ -1,20 +1,57 @@
-  GNU nano 6.2                                      fastplong-wrapper.xml                                               <tool id="fastplong" name="Fastp Long Read Filter" version="0.2.2">
+<tool id="fastplong" name="Fastp Long Read Filter" version="0.2.2">
     <requirements>
         <requirement type="package" version="0.2.2">fastplong</requirement>
     </requirements>
     <description>Filter and trim long reads</description>
     <command detect_errors="exit_code">
         <![CDATA[
-        fastplong -i '$inputs' -o '$output'
-        #if $reads_to_process:
+        fastplong -i '$inputs' -o '$output' 
+	#if $reads_to_process:
             --reads_to_process '$reads_to_process'
+        #end if
+	#if $disable_quality_filtering:
+            --disable_quality_filtering
+        #end if
+	 #if $disable_adapter_trimming:
+            --disable_adapter_trimming
+        #end if
+	#if $start_adapter:
+            --start_adapter '$start_adapter'
+        #end if
+	#if $end_adapter:
+            --end_adapter '$end_adapter'
+        #end if
+	#if $adapter_fasta:
+            --adapter_fasta '$adapter_fasta'
+        #end if
+	#if $distance_threshold:
+            --distance_threshold '$distance_threshold'
+        #end if
+	#if $trimming_extension:
+            --trimming_extension '$trimming_extension'
+        #end if
+	#if $trim_front:
+            --trim_front '$trim_front'
+        #end if
+        #if $trim_tail:
+            --trim_tail '$trim_tail'
         #end if
         ]]>
     </command>
 
     <inputs>
         <param name="inputs" type="data" format="fastq" label="Input FASTQ file"/>
-        <param name="reads_to_process" type="integer" optional="true" label="Number of reads to process (optional)" hel>    </inputs>
+	<param name="reads_to_process" type="integer" optional="true" label="Number of reads to process (optional)" help="Limit the number of reads to process. Useful for quick QC or creating subsets."/>
+	<param name="disable_quality_filtering" type="boolean" checked="false" label="Disable quality filtering?" help="By default, quality filtering is enabled. Enable this option to turn it off (--disable_quality_filtering or -Q)."/>
+	<param name="disable_adapter_trimming" type="boolean" checked="false" label="Disable adapter trimming?" help="By default, adapter trimming is enabled. Enable this option to turn it off (--disable_adapter_trimming or -A)."/>
+	<param name="start_adapter" type="text" optional="true" label="Start adapter sequence (5')" help="Specify the adapter sequence at the 5' end of reads (--start_adapter or -s). Leave blank to auto-detect."/>
+	<param name="end_adapter" type="text" optional="true" label="End adapter sequence (3')" help="Specify the adapter sequence at the 3' end of reads (--end_adapter or -e). Leave blank to auto-detect."/>
+	<param name="adapter_fasta" type="data" format="fasta" optional="true" label="Adapter sequences (FASTA file)" help="Specify a FASTA file with adapter sequences to trim (--adapter_fasta or -a)"/>
+	<param name="distance_threshold" type="float" optional="true" label="Adapter distance threshold" help="Threshold of sequence-adapter-distance / adapter-length. Higher values detect more adapters (--distance_threshold or -d). Range: 0.0–1.0"/>
+	<param name="trimming_extension" type="integer" optional="true" label="Trimming extension length" help="Extend trimming beyond the adapter match to clean up the sequence more thoroughly (--trimming_extension). Default is 10"/>
+	<param name="trim_front" type="integer" optional="true" label="Trim front (5') bases" help="Trim this many bases from the start (5') of each read (--trim_front or -f). Default is 0"/>
+        <param name="trim_tail" type="integer" optional="true" label="Trim tail (3') bases" help="Trim this many bases from the end (3') of each read (--trim_tail or -t). Default is 0"/>
+    </inputs>
 
     <outputs>
         <data name="output" format="fastq" label="Filtered Output FASTQ"/>
