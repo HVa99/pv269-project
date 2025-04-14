@@ -36,6 +36,18 @@
         #if $trim_tail:
             --trim_tail '$trim_tail'
         #end if
+	#if $trim_poly_x:
+            --trim_poly_x
+        #end if
+        #if $poly_x_min_len:
+            --poly_x_min_len '$poly_x_min_len'
+        #end if
+        #if $cut_front:
+            --cut_front
+        #end if
+        #if $cut_tail:
+            --cut_tail
+        #end if
         ]]>
     </command>
 
@@ -51,6 +63,10 @@
 	<param name="trimming_extension" type="integer" optional="true" label="Trimming extension length" help="Extend trimming beyond the adapter match to clean up the sequence more thoroughly (--trimming_extension). Default is 10"/>
 	<param name="trim_front" type="integer" optional="true" label="Trim front (5') bases" help="Trim this many bases from the start (5') of each read (--trim_front or -f). Default is 0"/>
         <param name="trim_tail" type="integer" optional="true" label="Trim tail (3') bases" help="Trim this many bases from the end (3') of each read (--trim_tail or -t). Default is 0"/>
+	<param name="trim_poly_x" type="boolean" checked="false" label="Trim polyX tails?" help="Enable to trim polyX stretches (e.g., polyA, polyT) at the 3' end (--trim_poly_x or -x)"/>
+        <param name="poly_x_min_len" type="integer" optional="true" label="Minimum polyX length" help="Minimum length to detect polyX in the tail (--poly_x_min_len). Default is 10"/>
+        <param name="cut_front" type="boolean" checked="false" label="Enable sliding-window trimming from 5' end?" help="Trim from 5' end until window mean quality is above threshold (--cut_front or -5)"/>
+        <param name="cut_tail" type="boolean" checked="false" label="Enable sliding-window trimming from 3' end?" help="Trim from 3' end until window mean quality is above threshold (--cut_tail or -3)"/>
     </inputs>
 
     <outputs>
