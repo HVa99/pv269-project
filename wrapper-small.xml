@@ -1,19 +1,20 @@
-<tool id="fastplong" name="Fastp Long Read Filter" version="0.2.2">
+  GNU nano 6.2                                      fastplong-wrapper.xml                                               <tool id="fastplong" name="Fastp Long Read Filter" version="0.2.2">
     <requirements>
         <requirement type="package" version="0.2.2">fastplong</requirement>
     </requirements>
     <description>Filter and trim long reads</description>
     <command detect_errors="exit_code">
         <![CDATA[
-        fastplong \
-            -i '$inputs' \
-            -o '$output'
+        fastplong -i '$inputs' -o '$output'
+        #if $reads_to_process:
+            --reads_to_process '$reads_to_process'
+        #end if
         ]]>
     </command>
 
     <inputs>
         <param name="inputs" type="data" format="fastq" label="Input FASTQ file"/>
-    </inputs>
+        <param name="reads_to_process" type="integer" optional="true" label="Number of reads to process (optional)" hel>    </inputs>
 
     <outputs>
         <data name="output" format="fastq" label="Filtered Output FASTQ"/>
