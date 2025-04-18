@@ -97,7 +97,7 @@
 	    --thread '$thread'
 	#end if
 	#if $save_failed_reads:
-	    --failed_out failed_reads.fastq
+	    --failed_out '$failed_out'
 	#end if
         ]]>
     </command>
