@@ -99,6 +99,15 @@
 	#if $save_failed_reads:
 	    --failed_out '$failed_out'
 	#end if
+	#if $compression:
+	    --compression '$compression'
+	#end if
+	#if $verbose:
+	    --verbose
+	#end if
+	#if $report_title:
+    		--report_title '$report_title'
+	#end if
         ]]>
     </command>
 
@@ -137,6 +146,13 @@
 	<param name="save_failed_reads" type="boolean" checked="false"
        		label="Save failed reads?"
 	      	help="Enable this to write failed reads to a separate FASTQ file (--failed_out)"/>
+	<param name="compression" type="integer" optional="true" label="Gzip compression level"
+		help="Compression level for gzip output (1–9). 1 is fastest, 9 is smallest. Default is 4." />
+	<param name="verbose" type="boolean" checked="false" label="Enable verbose logging?"
+	       help="Print log updates after every 1M reads processed (--verbose or -V). Useful for monitoring progress in long runs."/>
+	<param name="report_title" type="text" optional="true"
+	       label="Report title"
+       	       help="Optional: Title for the report (--report_title or -R). If omitted, the default is 'fastplong report'."/>
     </inputs>
 
     <outputs>
