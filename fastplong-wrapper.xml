@@ -97,7 +97,7 @@
 	    --thread '$thread'
 	#end if
 	#if $save_failed_reads:
-	    --failed_out failed_reads.fastq
+	    --failed_out '$failed_out'
 	#end if
         ]]>
     </command>
@@ -141,12 +141,8 @@
 
     <outputs>
         <data name="output" format="fastq" label="Filtered Output FASTQ"/>
-	<outputs>
-    <data name="output" format="fastq" label="Filtered Output FASTQ"/>
-    <data name="failed_out" format="fastq" from_work_dir="failed_reads.fastq" label="Failed Reads FASTQ" optional="true">
-        <filter>save_failed_reads</filter>
-    </data>
-</outputs>
-
+        <data name="failed_out" format="fastq" from_work_dir="failed_reads.fastq" label="Failed Reads FASTQ" optional="true">
+            <filter>save_failed_reads</filter>
+        </data>
     </outputs>
 </tool>
