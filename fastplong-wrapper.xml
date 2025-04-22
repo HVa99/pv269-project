@@ -1,8 +1,8 @@
 <tool id="fastplong" name="Fastplong" version="0.2.2">
+    <description>Filter and trim long reads</description>
     <requirements>
         <requirement type="package" version="0.2.2">fastplong</requirement>
     </requirements>
-    <description>Filter and trim long reads</description>
     <command detect_errors="exit_code">
         <![CDATA[
         fastplong -i '$inputs' -o '$output' 
@@ -173,7 +173,7 @@
 
     <outputs>
         <data name="output" format="fastq" label="Filtered Output FASTQ"/>
-        <data name="failed_out" format="fastq" from_work_dir="failed_reads.fastq" label="Failed Reads FASTQ" optional="true">
+        <data name="failed_out" format="fastq" from_work_dir="failed_reads.fastq" label="Failed Reads FASTQ">
             <filter>save_failed_reads</filter>
         </data>
 	<data name="json_output" format="json" label="JSON Report">
@@ -191,4 +191,37 @@
             <filter>not html_report</filter>
         </data>
     </outputs>
+    <tests>
+    <test expect_num_outputs="1">
+        <param name="inputs" value="reads_1.fastq"/>
+        <output name="output" file="expected_output.fastq"/>
+    </test>
+    </tests>
+    <help>
+    **Fastplong: Filter and trim long reads**
+
+    This tool wraps the `fastplong` command-line tool to allow filtering and trimming of long reads in FASTQ format.
+
+    **Inputs**
+    - A FASTQ file containing reads.
+    - Optional parameters to control trimming, quality filtering, adapter detection, and more.
+
+    **Outputs**
+    - A filtered FASTQ file with trimmed reads.
+    - (Optional) A FASTQ file of failed reads.
+    - (Optional) A JSON report with statistics.
+
+    **Common Options**
+    - *Trim front/tail*: Remove fixed numbers of bases from either end.
+    - *Quality filters*: Remove low-quality reads or bases.
+    - *Adapter removal*: Automatically detect or specify adapter sequences.
+    - *JSON report title*: Customize the report title with the `--report_title` option.
+
+    For more information, see the [Fastplong GitHub repository](https://github.com/your/repo).
+    </help>
+    <citations>
+	<citation type="doi">10.1002/imt2.107</citation>
+    	<citation type="doi">10.1093/bioinformatics/bty560</citation>
+    </citations>
+
 </tool>
