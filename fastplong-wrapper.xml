@@ -105,8 +105,10 @@
 	#if $verbose:
 	    --verbose
 	#end if
-	#if $report_title:
-    		--report_title '$report_title'
+	#if $json_report:
+    		--json '${json_output}'
+	#else:
+	    --json 'fastplong.json'
 	#end if
         ]]>
     </command>
@@ -150,9 +152,9 @@
 		help="Compression level for gzip output (1–9). 1 is fastest, 9 is smallest. Default is 4." />
 	<param name="verbose" type="boolean" checked="false" label="Enable verbose logging?"
 	       help="Print log updates after every 1M reads processed (--verbose or -V). Useful for monitoring progress in long runs."/>
-	<param name="report_title" type="text" optional="true"
-	       label="Report title"
-       	       help="Optional: Title for the report (--report_title or -R). If omitted, the default is 'fastplong report'."/>
+	<param name="json_report" type="text" optional="true" label="JSON report filename"
+       help="Optional: Name of the JSON-format report file (--json). If not specified, defaults to fastplong.json."/>
+
     </inputs>
 
     <outputs>
@@ -160,5 +162,13 @@
         <data name="failed_out" format="fastq" from_work_dir="failed_reads.fastq" label="Failed Reads FASTQ" optional="true">
             <filter>save_failed_reads</filter>
         </data>
+	<data name="json_output" format="json" label="JSON Report">
+	    <filter>json_report</filter>
+	</data>
+
+	<data name="json_output_default" format="json" from_work_dir="fastplong.json" label="JSON Report (default)">
+	    <filter>not json_report</filter>
+	</data>
+
     </outputs>
 </tool>
