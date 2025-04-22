@@ -115,6 +115,11 @@
         #else:
             --html 'fastplong.html'
         #end if
+	#if $report_title:
+    		--report_title '$report_title'
+	#else:
+    		--report_title 'fastplong report'
+	#end if
         ]]>
     </command>
 
@@ -161,6 +166,9 @@
        help="Optional: Name of the JSON-format report file (--json). If not specified, defaults to fastplong.json."/>
 	<param name="html_report" type="text" optional="true" label="HTML report filename"
        help="Optional: Name of the HTML-format report file (--html). If not specified, defaults to fastplong.html."/>
+	<param name="report_title" type="text" optional="true"
+       label="Report title"
+       help="Optional: Title for the report (--report_title or -R). If omitted, the default is 'fastplong report'."/>
     </inputs>
 
     <outputs>
