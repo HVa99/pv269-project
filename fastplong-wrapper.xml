@@ -110,6 +110,11 @@
 	#else:
 	    --json 'fastplong.json'
 	#end if
+	#if $html_report:
+                --html '${html_output}'
+        #else:
+            --html 'fastplong.html'
+        #end if
         ]]>
     </command>
 
@@ -154,7 +159,8 @@
 	       help="Print log updates after every 1M reads processed (--verbose or -V). Useful for monitoring progress in long runs."/>
 	<param name="json_report" type="text" optional="true" label="JSON report filename"
        help="Optional: Name of the JSON-format report file (--json). If not specified, defaults to fastplong.json."/>
-
+	<param name="html_report" type="text" optional="true" label="HTML report filename"
+       help="Optional: Name of the HTML-format report file (--html). If not specified, defaults to fastplong.html."/>
     </inputs>
 
     <outputs>
@@ -169,6 +175,12 @@
 	<data name="json_output_default" format="json" from_work_dir="fastplong.json" label="JSON Report (default)">
 	    <filter>not json_report</filter>
 	</data>
+	<data name="html_output" format="html" label="HTML Report">
+            <filter>html_report</filter>
+        </data>
 
+        <data name="html_output_default" format="html" from_work_dir="fastplong.html" label="HTML Report (default)">
+            <filter>not html_report</filter>
+        </data>
     </outputs>
 </tool>
