@@ -193,7 +193,7 @@
     </outputs>
     <tests>
     <test expect_num_outputs="1">
-        <param name="inputs" value="reads_1.fastq"/>
+        <param name="inputs" value="input_reads.fastq"/>
         <output name="output" file="expected_output.fastq"/>
     </test>
     </tests>
@@ -209,15 +209,15 @@
     **Outputs**
     - A filtered FASTQ file with trimmed reads.
     - (Optional) A FASTQ file of failed reads.
-    - (Optional) A JSON report with statistics.
+    - A JSON report.
+    - An HTML report.
 
     **Common Options**
     - *Trim front/tail*: Remove fixed numbers of bases from either end.
     - *Quality filters*: Remove low-quality reads or bases.
     - *Adapter removal*: Automatically detect or specify adapter sequences.
-    - *JSON report title*: Customize the report title with the `--report_title` option.
 
-    For more information, see the [Fastplong GitHub repository](https://github.com/your/repo).
+    For more information, see https://github.com/OpenGene/fastplong
     </help>
     <citations>
 	<citation type="doi">10.1002/imt2.107</citation>
