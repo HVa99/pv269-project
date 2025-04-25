@@ -155,20 +155,12 @@
 	<param name="low_complexity_filter" type="boolean" checked="false" label="Enable low complexity filter?" help="Enable low complexity filtering (--low_complexity_filter or -y)"/>
 	<param name="complexity_threshold" type="integer" optional="true" label="Complexity threshold (%)" help="Minimum required sequence complexity (0–100) (--complexity_threshold or -Y). Default: 30"/>
 	<param name="thread" type="integer" optional="true" label="Number of threads" help="Number of worker threads (--thread or -w). Default is 3"/>
-	<param name="save_failed_reads" type="boolean" checked="false"
-       		label="Save failed reads?"
-	      	help="Enable this to write failed reads to a separate FASTQ file (--failed_out)"/>
-	<param name="compression" type="integer" optional="true" label="Gzip compression level"
-		help="Compression level for gzip output (1–9). 1 is fastest, 9 is smallest. Default is 4." />
-	<param name="verbose" type="boolean" checked="false" label="Enable verbose logging?"
-	       help="Print log updates after every 1M reads processed (--verbose or -V). Useful for monitoring progress in long runs."/>
-	<param name="json_report" type="text" optional="true" label="JSON report filename"
-       help="Optional: Name of the JSON-format report file (--json). If not specified, defaults to fastplong.json."/>
-	<param name="html_report" type="text" optional="true" label="HTML report filename"
-       help="Optional: Name of the HTML-format report file (--html). If not specified, defaults to fastplong.html."/>
-	<param name="report_title" type="text" optional="true"
-       label="Report title"
-       help="Optional: Title for the report (--report_title or -R). If omitted, the default is 'fastplong report'."/>
+	<param name="save_failed_reads" type="boolean" checked="false" label="Save failed reads?" help="Enable this to write failed reads to a separate FASTQ file (--failed_out)"/>
+	<param name="compression" type="integer" optional="true" label="Gzip compression level" help="Compression level for gzip output (1–9). 1 is fastest, 9 is smallest. Default is 4." />
+	<param name="verbose" type="boolean" checked="false" label="Enable verbose logging?" help="Print log updates after every 1M reads processed (--verbose or -V). Useful for monitoring progress in long runs."/>
+	<param name="json_report" type="text" optional="true" label="JSON report filename" help="Optional: Name of the JSON-format report file (--json). If not specified, defaults to fastplong.json."/>
+	<param name="html_report" type="text" optional="true" label="HTML report filename" help="Optional: Name of the HTML-format report file (--html). If not specified, defaults to fastplong.html."/>
+	<param name="report_title" type="text" optional="true" label="Report title" help="Optional: Title for the report (--report_title or -R). If omitted, the default is 'fastplong report'."/>
     </inputs>
 
     <outputs>
@@ -191,34 +183,28 @@
             <filter>not html_report</filter>
         </data>
     </outputs>
+
     <tests>
-    <test expect_num_outputs="1">
-        <param name="inputs" value="input_reads.fastq"/>
-        <output name="output" file="expected_output.fastq"/>
-    </test>
+	<test expect_num_outputs="3">
+        	<param name="inputs" value="input.fastq"/>
+        	<output name="output" file="output.fastq"/>
+    	</test>
     </tests>
+
     <help>
-    **Fastplong: Filter and trim long reads**
+	**Fastplong: Filter and trim long reads**
 
-    This tool wraps the `fastplong` command-line tool to allow filtering and trimming of long reads in FASTQ format.
+    	This tool wraps the `fastplong` command-line tool to allow filtering and trimming of long reads in FASTQ format.
 
-    **Inputs**
-    - A FASTQ file containing reads.
-    - Optional parameters to control trimming, quality filtering, adapter detection, and more.
+	**Inputs**
+	- A FASTQ file containing reads and optional parameters to control trimming, quality filtering, adapter detection, and more.
 
-    **Outputs**
-    - A filtered FASTQ file with trimmed reads.
-    - (Optional) A FASTQ file of failed reads.
-    - A JSON report.
-    - An HTML report.
+	**Outputs**
+	- A filtered FASTQ file with trimmed reads, HTML and JSON report and an optional FASTQ file of failed reads.
 
-    **Common Options**
-    - *Trim front/tail*: Remove fixed numbers of bases from either end.
-    - *Quality filters*: Remove low-quality reads or bases.
-    - *Adapter removal*: Automatically detect or specify adapter sequences.
-
-    For more information, see https://github.com/OpenGene/fastplong
+	For more information, see https://github.com/OpenGene/fastplong
     </help>
+
     <citations>
 	<citation type="doi">10.1002/imt2.107</citation>
     	<citation type="doi">10.1093/bioinformatics/bty560</citation>
